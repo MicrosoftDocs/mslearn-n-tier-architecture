@@ -10,14 +10,10 @@
         },
         "sqlServerName": {
             "type": "string"
-        },
-        "githubRootUrl": {
-            "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/MicrosoftDocs/mslearn-n-tier-architecture/master/Deployment"
         }
     },
     "variables": {
-        "githubRootUrl": "[concat(parameters('githubRootUrl'), if(endsWith(parameters('githubRootUrl'), '/'), '', '/'))]",
+        "deploymentUrl": "[deployment().properties.templateLink.uri]",
         "sqlServerResourceId": "[resourceId('Microsoft.Sql/servers', parameters('sqlServerName'))]",
         "sqlServerDatabaseName": "demo-sqldb",
         "vnetName": "demo-vnet",
@@ -300,10 +296,10 @@
                         "protectedSettings": {
                             "commandToExecute": "sh setup-votingweb.sh",
                             "fileUris": [
-                                "[uri(variables('githubRootUrl'), 'setup-votingweb.sh')]",
-                                "[uri(variables('githubRootUrl'), 'votingweb.conf')]",
-                                "[uri(variables('githubRootUrl'), 'votingweb.service')]",
-                                "[uri(variables('githubRootUrl'), 'votingweb.zip')]"
+                                "[uri(variables('deploymentUrl'), 'setup-votingweb.sh')]",
+                                "[uri(variables('deploymentUrl'), 'votingweb.conf')]",
+                                "[uri(variables('deploymentUrl'), 'votingweb.service')]",
+                                "[uri(variables('deploymentUrl'), 'votingweb.zip')]"
                             ]
                         }
                     },
@@ -386,10 +382,10 @@
                         "protectedSettings": {
                             "commandToExecute": "[concat('sh setup-votingdata.sh ', parameters('sqlServerName'), ' ', parameters('username'), ' ', parameters('password'))]",
                             "fileUris": [
-                                "[uri(variables('githubRootUrl'), 'setup-votingdata.sh')]",
-                                "[uri(variables('githubRootUrl'), 'votingdata.conf')]",
-                                "[uri(variables('githubRootUrl'), 'votingdata.service')]",
-                                "[uri(variables('githubRootUrl'), 'votingdata.zip')]"
+                                "[uri(variables('deploymentUrl'), 'setup-votingdata.sh')]",
+                                "[uri(variables('deploymentUrl'), 'votingdata.conf')]",
+                                "[uri(variables('deploymentUrl'), 'votingdata.service')]",
+                                "[uri(variables('deploymentUrl'), 'votingdata.zip')]"
                             ]
                         }
                     },
