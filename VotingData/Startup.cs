@@ -49,8 +49,11 @@ namespace VotingData
             app.UseMvc();
 
             // We will just create the table on startup if it doesn't exist since this is a demo
-            var dbContext = app.ApplicationServices.GetService<VotingDBContext>();
-            VotingDBContext.CreateTablesIfNotExists(dbContext);
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                var dbContext = serviceScope.ServiceProvider.GetService<VotingDBContext>();
+                VotingDBContext.CreateTablesIfNotExists(dbContext);
+            }
         }
     }
 }
