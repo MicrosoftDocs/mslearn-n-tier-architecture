@@ -52,7 +52,9 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-**/Properties/launchSettings.json
+
+# We will check in the launchSettings.json file so setup for debugging is easier.
+#**/Properties/launchSettings.json
 
 # StyleCop
 StyleCopReport.xml
