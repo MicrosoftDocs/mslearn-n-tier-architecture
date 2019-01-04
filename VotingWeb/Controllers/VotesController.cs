@@ -36,8 +36,12 @@ namespace VotingWeb.Controllers
         [HttpPut("{name}")]
         public async Task<IActionResult> Put(string name)
         {
-            await this.client.AddVote(name);
-            return this.Ok();
+            var response = await this.client.AddVote(name);
+
+            if (response.IsSuccessStatusCode) return this.Ok();
+
+            var errorMessage = await response.Content.ReadAsStringAsync();
+            return BadRequest(errorMessage);
         }
 
         // DELETE: api/Votes/name
