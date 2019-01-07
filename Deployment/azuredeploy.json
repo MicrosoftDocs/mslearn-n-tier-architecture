@@ -25,6 +25,8 @@
         "webVMNicPIPName": "demo-web-vm-nic-pip",
         "bizVMName": "demo-biz-vm",
         "bizVMNicName": "demo-biz-vm-nic",
+        "bizNSGName": "demo-biz-nsg",
+        "bizNSGResourceId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('bizNSGName'))]",
         "webVMNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', variables('webVMNicName'))]",
         "webVMNicPIPResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('webVMNicPIPName'))]",
         "webSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'web')]",
@@ -95,6 +97,31 @@
                             "sourcePortRange": "*",
                             "destinationPortRange": "80",
                             "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 300,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('bizNSGName')]",
+            "apiVersion": "2018-08-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "http",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "80",
+                            "sourceAddressPrefix": "10.1.0.0/24",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 300,
@@ -220,10 +247,14 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[variables('bizNSGResourceId')]"
+                },
                 "primary": true
             },
             "dependsOn": [
-                "[variables('vnetResourceId')]"
+                "[variables('vnetResourceId')]",
+                "[variables('bizNSGName')]"
             ]
         },
         {
