@@ -127,6 +127,19 @@
                             "priority": 300,
                             "direction": "Inbound"
                         }
+                    },
+                    {
+                        "name": "DenyInbound",
+                        "properties": {
+                            "protocol": "I",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Deny",
+                            "priority": 400,
+                            "direction": "Inbound"
+                        }
                     }
                 ]
             },
