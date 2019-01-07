@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Data.SqlClient;
+    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
@@ -12,10 +13,19 @@
     public class VoteDataController : ControllerBase
     {
         private readonly VotingDBContext _context;
+        private List<string> _validOptions = new List<string> { "tacos", "sushi", "pizza", "burgers", "salad", "sandwiches" };
+        private readonly string _validOptionsString;
 
         public VoteDataController(VotingDBContext context)
         {
             _context = context;
+
+            var validOptionStringBuilder = new StringBuilder();
+            foreach (var validOption in _validOptions)
+            {
+                validOptionStringBuilder.Append(validOption + " ");
+            }
+            _validOptionsString = validOptionStringBuilder.ToString();
         }
 
         // GET api/VoteData
@@ -29,6 +39,11 @@
         [HttpPut("{name}")]
         public async Task<IActionResult> Put(string name)
         {
+            if (!_validOptions.Contains(name)) {
+                
+                return BadRequest($"'{name}' is not a valid option. Valid options are: {_validOptionsString}");
+            }
+
             var candidate = await _context.Counts.FirstOrDefaultAsync(c => c.Candidate == name);
             if (candidate == null)
             {

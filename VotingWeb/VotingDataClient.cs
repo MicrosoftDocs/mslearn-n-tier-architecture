@@ -24,12 +24,11 @@ namespace VotingWeb
             return JsonConvert.DeserializeObject<IList<Counts>>(await response.Content.ReadAsStringAsync());
         }
 
-        internal async Task AddVote(string candidate)
+        internal async Task<HttpResponseMessage> AddVote(string candidate)
         {
             var request = new HttpRequestMessage(HttpMethod.Put,
                 $"/api/VoteData/{candidate}");
-            var response = await HttpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
+            return await HttpClient.SendAsync(request);
         }
 
         internal async Task DeleteCandidate(string candidate)

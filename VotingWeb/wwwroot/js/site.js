@@ -29,6 +29,9 @@ app.controller('VotingAppController', ['$rootScope', '$scope', '$http', '$timeou
             .then(function (data, status) {
                 $scope.refresh();
                 $scope.item = undefined;
+            },
+            function (response) {
+                alert(response.data);
             })
     };
 }]);
