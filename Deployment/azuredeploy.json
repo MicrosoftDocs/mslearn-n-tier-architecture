@@ -131,7 +131,7 @@
                     {
                         "name": "DenyInbound",
                         "properties": {
-                            "protocol": "I",
+                            "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
                             "sourceAddressPrefix": "*",
