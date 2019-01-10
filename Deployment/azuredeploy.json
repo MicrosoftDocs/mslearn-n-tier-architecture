@@ -217,7 +217,9 @@
             "name": "[variables('webVMNicName')]",
             "apiVersion": "2018-08-01",
             "location": "[resourceGroup().location]",
-            "tags": {},
+            "tags": {
+                "tier": "presentation"
+            },
             "scale": null,
             "properties": {
                 "ipConfigurations": [
@@ -255,7 +257,9 @@
             "name": "[variables('bizVMNicName')]",
             "apiVersion": "2018-08-01",
             "location": "[resourceGroup().location]",
-            "tags": {},
+            "tags": {
+                "tier": "application"
+            },
             "scale": null,
             "properties": {
                 "ipConfigurations": [
