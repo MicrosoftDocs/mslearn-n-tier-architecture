@@ -3,13 +3,15 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "username": {
-            "type": "securestring"
+            "type": "string",
+            "defaultValue": "adminaccount"
         },
         "password": {
             "type": "securestring"
         },
         "sqlServerName": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "[concat('demo-dbserver-', uniqueString(resourceGroup().id))]"
         }
     },
     "variables": {
