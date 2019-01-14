@@ -7,7 +7,7 @@
             "defaultValue": "adminaccount"
         },
         "password": {
-            "type": "securestring"
+            "type": "string"
         },
         "sqlServerName": {
             "type": "string",
