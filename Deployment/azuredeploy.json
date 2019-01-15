@@ -194,7 +194,9 @@
                     }
                 ]
             },
-            "dependsOn": []
+            "dependsOn": [
+                "[variables('webNSGResourceId')]"
+            ]
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -248,8 +250,7 @@
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
-                "[variables('vnetResourceId')]",
-                "[variables('webNSGName')]"
+                "[variables('vnetResourceId')]"
             ]
         },
         {
