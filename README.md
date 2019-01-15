@@ -1,6 +1,6 @@
-# Microsoft Learn: Deploy an N-tier architecture with Azure Virtual Machines and Azure SQL Database
+# Microsoft Learn: Tour the N-tier architecture style for your application
 
-This repository contains the supporting code and deployment resources for the *Deploy an N-tier architecture with Azure Virtual Machines and Azure SQL Database* module on Microsoft Learn.
+This repository contains the supporting code and deployment resources for the [Tour the N-tier architecture style for your application](https://docs.microsoft.com/learn/modules/n-tier-architecture/)  module on Microsoft Learn.
 
 # Contributing
 
