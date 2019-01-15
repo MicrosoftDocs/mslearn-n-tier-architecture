@@ -172,10 +172,7 @@
                     {
                         "name": "web",
                         "properties": {
-                            "addressPrefix": "10.1.0.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[variables('webNSGResourceId')]"
-                            }
+                            "addressPrefix": "10.1.0.0/24"
                         }
                     },
                     {
@@ -198,8 +195,7 @@
                 ]
             },
             "dependsOn": [
-                "[variables('bizNSGName')]",
-                "[variables('webNSGName')]"
+                "[variables('bizNSGName')]"
             ]
         },
         {
@@ -250,11 +246,15 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[variables('webNSGResourceId')]"
+                },
                 "primary": true
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
-                "[variables('vnetResourceId')]"
+                "[variables('vnetResourceId')]",
+                "[variables('webNSGName')]"
             ]
         },
         {
@@ -286,7 +286,7 @@
                 "primary": true
             },
             "dependsOn": [
-                "[variables('vnetResourceId')]"
+                "[variables('vnetResourceId')]"                
             ]
         },
         {
