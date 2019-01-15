@@ -172,16 +172,16 @@
                     {
                         "name": "web",
                         "properties": {
-                            "addressPrefix": "10.1.0.0/24"
+                            "addressPrefix": "10.1.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[variables('webNSGResourceId')]"
+                            }
                         }
                     },
                     {
                         "name": "biz",
                         "properties": {
                             "addressPrefix": "10.1.1.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[variables('bizNSGResourceId')]"
-                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Sql",
@@ -194,9 +194,7 @@
                     }
                 ]
             },
-            "dependsOn": [
-                "[variables('bizNSGName')]"
-            ]
+            "dependsOn": []
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -246,9 +244,6 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[variables('webNSGResourceId')]"
-                },
                 "primary": true
             },
             "dependsOn": [
@@ -283,10 +278,14 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[variables('bizNSGResourceId')]"
+                },
                 "primary": true
             },
             "dependsOn": [
-                "[variables('vnetResourceId')]"                
+                "[variables('vnetResourceId')]",
+                "[variables('bizNSGName')]"
             ]
         },
         {
