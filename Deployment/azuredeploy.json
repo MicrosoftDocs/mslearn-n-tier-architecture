@@ -172,13 +172,19 @@
                     {
                         "name": "web",
                         "properties": {
-                            "addressPrefix": "10.1.0.0/24"
+                            "addressPrefix": "10.1.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[variables('webNSGResourceId')]"
+                            }
                         }
                     },
                     {
                         "name": "biz",
                         "properties": {
                             "addressPrefix": "10.1.1.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[variables('bizNSGResourceId')]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Sql",
@@ -191,7 +197,10 @@
                     }
                 ]
             },
-            "dependsOn": []
+            "dependsOn": [
+                "[variables('bizNSGName')]",
+                "[variables('webNSGName')]"
+            ]
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -241,15 +250,11 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[variables('webNSGResourceId')]"
-                },
                 "primary": true
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
-                "[variables('vnetResourceId')]",
-                "[variables('webNSGName')]"
+                "[variables('vnetResourceId')]"
             ]
         },
         {
@@ -278,14 +283,10 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[variables('bizNSGResourceId')]"
-                },
                 "primary": true
             },
             "dependsOn": [
-                "[variables('vnetResourceId')]",
-                "[variables('bizNSGName')]"
+                "[variables('vnetResourceId')]"
             ]
         },
         {
