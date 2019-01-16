@@ -161,7 +161,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[variables('bizSubnetName')]",
+            "name": "[concat(variables('vnetName'), '/', variables('bizSubnetName'))]",
             "apiVersion": "2018-10-01",
             "properties": {
                 "addressPrefix": "10.1.1.0/24",
@@ -184,7 +184,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
-            "name": "[variables('webSubnetName')]",
+            "name": "[concat(variables('vnetName'), '/', variables('webSubnetName'))]",
             "apiVersion": "2018-10-01",
             "properties": {
                 "addressPrefix": "10.1.0.0/24",
