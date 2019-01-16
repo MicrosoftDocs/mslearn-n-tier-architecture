@@ -175,13 +175,13 @@
                 },
                 "subnets": [
                     {
-                        "name": "web",
+                        "name": "[variables('webSubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('webSubnetPrefix')]"
                         }
                     },
                     {
-                        "name": "biz",
+                        "name": "[variables('bizSubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('bizSubnetPrefix')]",
                             "serviceEndpoints": [
