@@ -25,15 +25,17 @@
         "webVMName": "demo-web-vm",
         "webVMNicName": "demo-web-vm-nic",
         "webVMNicPIPName": "demo-web-vm-nic-pip",
+        "webSubnetName": "demo-web-subnet",
         "bizVMName": "demo-biz-vm",
         "bizVMNicName": "demo-biz-vm-nic",
         "bizNSGName": "demo-biz-nsg",
+        "bizSubnetName": "demo-biz-subnet",
         "bizNSGResourceId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('bizNSGName'))]",
         "webVMNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', variables('webVMNicName'))]",
         "webVMNicPIPResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('webVMNicPIPName'))]",
-        "webSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'web')]",
+        "webSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('webSubnetName')]",
         "bizVMNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', variables('bizVMNicName'))]",
-        "bizSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), 'biz')]"
+        "bizSubnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), variables('bizSubnetName')]"
     },
     "resources": [
         {
@@ -112,19 +114,6 @@
                             "priority": 300,
                             "direction": "Inbound"
                         }
-                    },
-                    {
-                        "name": "DenyInbound",
-                        "properties": {
-                            "protocol": "*",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Deny",
-                            "priority": 400,
-                            "direction": "Inbound"
-                        }
                     }
                 ]
             },
@@ -171,6 +160,44 @@
             "dependsOn": []
         },
         {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[variables('bizSubnetName')]",
+            "apiVersion": "2018-10-01",
+            "properties": {
+                "addressPrefix": "10.1.1.0/24",
+                "networkSecurityGroup": {
+                    "id": "[variables('bizNSGResourceId')]",
+                    "serviceEndpoints": [
+                        {
+                            "service": "Microsoft.Sql",
+                            "locations": [
+                                "[resourceGroup().location]"
+                            ]
+                        }
+                    ]
+                }
+            },
+            "dependsOn": [
+                "[variables('vnetResourceId')]",
+                "[variables('bizNSGName')]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "name": "[variables('webSubnetName')]",
+            "apiVersion": "2018-10-01",
+            "properties": {
+                "addressPrefix": "10.1.0.0/24",
+                "networkSecurityGroup": {
+                    "id": "[variables('webNSGResourceId')]"
+                }
+            },
+            "dependsOn": [
+                "[variables('vnetResourceId')]",
+                "[variables('webNSGResourceId')]"
+            ]
+        },
+        {
             "type": "Microsoft.Network/virtualNetworks",
             "name": "[variables('vnetName')]",
             "apiVersion": "2018-08-01",
@@ -183,32 +210,18 @@
                 },
                 "subnets": [
                     {
-                        "name": "web",
-                        "properties": {
-                            "addressPrefix": "10.1.0.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[variables('webNSGResourceId')]"
-                            }
-                        }
+                        "name": "[variables('webSubnetName')]",
+                        "id": "[variables('webSubnetResourceId')]"
                     },
                     {
-                        "name": "biz",
-                        "properties": {
-                            "addressPrefix": "10.1.1.0/24",
-                            "serviceEndpoints": [
-                                {
-                                    "service": "Microsoft.Sql",
-                                    "locations": [
-                                        "[resourceGroup().location]"
-                                    ]
-                                }
-                            ]
-                        }
+                        "name": "[variables('bizSubnetName')]",
+                        "id": "[variables('bizSubnetResourceId')]"
                     }
                 ]
             },
             "dependsOn": [
-                "[variables('webNSGResourceId')]"
+                "[variables('webNSGResourceId')]",
+                "[variables('bizNSGResourceId')]"
             ]
         },
         {
@@ -262,9 +275,9 @@
                 "primary": true
             },
             "dependsOn": [
-                "[variables('webVMNicPIPName')]",
                 "[variables('vnetResourceId')]",
-                "[variables('webNSGResourceId')]"
+                "[variables('webVMNicPIPName')]",
+                "[variables('webSubnetResourceId')]"
             ]
         },
         {
@@ -300,7 +313,7 @@
             },
             "dependsOn": [
                 "[variables('vnetResourceId')]",
-                "[variables('bizNSGName')]"
+                "[variables('bizSubnetResourceId')]"
             ]
         },
         {
