@@ -250,7 +250,8 @@
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
-                "[variables('vnetResourceId')]"
+                "[variables('vnetResourceId')]",
+                "[variables('webNSGResourceId')]"
             ]
         },
         {
