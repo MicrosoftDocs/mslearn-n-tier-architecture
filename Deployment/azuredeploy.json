@@ -177,13 +177,19 @@
                     {
                         "name": "[variables('webSubnetName')]",
                         "properties": {
-                            "addressPrefix": "[variables('webSubnetPrefix')]"
+                            "addressPrefix": "[variables('webSubnetPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[variables('webNSGResourceId')]"
+                            }
                         }
                     },
                     {
                         "name": "[variables('bizSubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('bizSubnetPrefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[variables('bizNSGResourceId')]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Sql",
@@ -196,7 +202,10 @@
                     }
                 ]
             },
-            "dependsOn": []
+            "dependsOn": [
+                "[variables('webNSGResourceId')]",
+                "[variables('bizNSGResourceId')]"
+            ]
         },
         {
             "type": "Microsoft.Network/publicIPAddresses",
@@ -246,15 +255,11 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[variables('webNSGResourceId')]"
-                },
                 "primary": true
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
-                "[variables('vnetResourceId')]",
-                "[variables('webNSGName')]"
+                "[variables('vnetResourceId')]"
             ]
         },
         {
@@ -283,14 +288,10 @@
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[variables('bizNSGResourceId')]"
-                },
                 "primary": true
             },
             "dependsOn": [
-                "[variables('vnetResourceId')]",
-                "[variables('bizNSGName')]"
+                "[variables('vnetResourceId')]"
             ]
         },
         {
