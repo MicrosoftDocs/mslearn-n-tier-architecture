@@ -32,7 +32,7 @@
         "bizVMNicName": "demo-biz-vm-nic",
         "bizNSGName": "demo-biz-nsg",
         "bizSubnetName": "demo-biz-subnet",
-        "webSubnetPrefix": "10.1.1.0/24",
+        "bizSubnetPrefix": "10.1.1.0/24",
         "bizNSGResourceId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('bizNSGName'))]",
         "webVMNicResourceId": "[resourceId('Microsoft.Network/networkInterfaces', variables('webVMNicName'))]",
         "webVMNicPIPResourceId": "[resourceId('Microsoft.Network/publicIPAddresses', variables('webVMNicPIPName'))]",
