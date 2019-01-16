@@ -207,17 +207,7 @@
                     "addressPrefixes": [
                         "10.1.0.0/16"
                     ]
-                },
-                "subnets": [
-                    {
-                        "name": "[variables('webSubnetName')]",
-                        "id": "[variables('webSubnetResourceId')]"
-                    },
-                    {
-                        "name": "[variables('bizSubnetName')]",
-                        "id": "[variables('bizSubnetResourceId')]"
-                    }
-                ]
+                }                
             },
             "dependsOn": [
                 "[variables('webNSGResourceId')]",
