@@ -20,7 +20,7 @@
         "sqlServerDatabaseName": "demo-sqldb",
         "vnetName": "demo-vnet",
         "vnetAddressPrefix": "10.1.0.0/16",
-        "vnetResourceId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('webNSGName'))]",
+        "vnetResourceId": "[resourceId('Microsoft.Network/virtualNetworks', variables('vnetName'))]",
         "webNSGName": "demo-web-nsg",
         "webNSGResourceId": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('webNSGName'))]",
         "webVMName": "demo-web-vm",
