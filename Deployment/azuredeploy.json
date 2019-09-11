@@ -240,16 +240,16 @@
                                 "id": "[variables('webSubnetResourceId')]"
                             },
                             "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "networkSecurityGroup": {
-                                "id": "[variables('webNSGResourceId')]"
-                            }
+                            "privateIPAddressVersion": "IPv4"
                         }
                     }
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "primary": true
+                "primary": true,
+                "networkSecurityGroup": {
+                    "id": "[variables('webNSGResourceId')]"
+                }
             },
             "dependsOn": [
                 "[variables('webVMNicPIPName')]",
@@ -277,16 +277,16 @@
                                 "id": "[variables('bizSubnetResourceId')]"
                             },
                             "primary": true,
-                            "privateIPAddressVersion": "IPv4",
-                            "networkSecurityGroup": {
-                                "id": "[variables('bizNSGResourceId')]"
-                            }
+                            "privateIPAddressVersion": "IPv4"
                         }
                     }
                 ],
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
-                "primary": true
+                "primary": true,
+                "networkSecurityGroup": {
+                    "id": "[variables('bizNSGResourceId')]"
+                }
             },
             "dependsOn": [
                 "[variables('vnetResourceId')]",
