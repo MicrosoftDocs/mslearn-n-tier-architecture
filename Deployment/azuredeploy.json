@@ -29,7 +29,7 @@
         "networkSecurityGroups_quote_nsg_name": {
             "defaultValue": "quote-nsg",
             "type": "string"
-        },
+        }
     },
     "variables": {},
     "resources": [
